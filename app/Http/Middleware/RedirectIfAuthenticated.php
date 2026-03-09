@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,13 +15,24 @@ class RedirectIfAuthenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string ...$guards): Response
+    public function handle(Request $request, Closure $next,  ...$guards): Response
     {
+
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+
+                if ($guard === 'super_admin' && $request->routeIs('super-admin.*')) {
+
+                    return redirect()->route('super-admin.dashboard');
+                }
+
+                if ($guard === 'admin' && $request->routeIs('admin.*')) {
+                    return redirect()->route('admin.dashboard');
+                }
+
+                return redirect()->route('dashboard');
             }
         }
 
