@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\SuperAdmin\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\SuperAdmin\Auth\PasswordController;
+use App\Http\Controllers\SuperAdmin\Auth\RegisteredUserController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,11 +15,15 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
 
         Route::post('login', [AuthenticatedSessionController::class, 'store'])
             ->name('password.store');
+        Route::get('register', [RegisteredUserController::class, 'create'])
+            ->name('register');
+        Route::post('register', [RegisteredUserController::class, 'store'])
+            ->name('password.store');
     });
 
     Route::middleware('auth:super_admin')->group(function () {
         Route::get('/dashboard', function () {
-            return view('superadmin.dashboard');
+            return view('super-admin.dashboard');
         })->name('dashboard');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

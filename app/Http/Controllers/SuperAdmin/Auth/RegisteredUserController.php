@@ -1,8 +1,9 @@
 <?php
 
-namespace App\\Http\\Controllers\\SuperAdmin\\Auth;
+namespace App\Http\Controllers\SuperAdmin\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\SuperAdmin;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('super-admin.auth.register');
     }
 
     /**
@@ -31,11 +32,11 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'. SuperAdmin::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $user = SuperAdmin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -45,6 +46,6 @@ class RegisteredUserController extends Controller
 
         Auth::guard('super_admin')->login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('super-admin.dashboard', absolute: false));
     }
 }
