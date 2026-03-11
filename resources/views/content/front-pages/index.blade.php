@@ -211,57 +211,13 @@
     </div>
   </nav>
 
-  <!-- ===== HERO SECTION ===== -->
-  <header class="agri-hero" id="home">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-7">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>
-            Admissions Open for 2026–27
-          </div>
-          <h1 class="hero-title">
-            Cultivating <span class="highlight">Future Leaders</span> in Agriculture
-          </h1>
-          <p class="hero-subtitle">
-            Join a world-class agricultural university dedicated to innovation, sustainability, and nurturing the next generation of farming scientists & agri-entrepreneurs.
-          </p>
-          <div class="hero-buttons">
-            <a href="#programs" class="btn-hero-primary">
-              <i class="fas fa-graduation-cap"></i> Explore Programs
-            </a>
-            <a href="#about" class="btn-hero-secondary">
-              <i class="fas fa-play-circle"></i> Virtual Tour
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-4 offset-lg-1">
-          <div class="hero-stats-card">
-            <div class="row">
-              <div class="col-lg-12 col-4">
-                <div class="stat-item">
-                  <span class="stat-number">50+</span>
-                  <span class="stat-label">Academic Programs</span>
-                </div>
-              </div>
-              <div class="col-lg-12 col-4">
-                <div class="stat-item">
-                  <span class="stat-number">12:1</span>
-                  <span class="stat-label">Student-Faculty Ratio</span>
-                </div>
-              </div>
-              <div class="col-lg-12 col-4">
-                <div class="stat-item">
-                  <span class="stat-number">95%</span>
-                  <span class="stat-label">Placement Rate</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+  {{-- ===== HERO BANNER =====
+      Switch between single or multi banner by commenting/un-commenting:
+      - Single static banner:  @include('content.front-pages.partials.hero-single-banner')
+      - Multi slider banner:   @include('content.front-pages.partials.hero-multi-banner')
+  --}}
+  @include('content.front-pages.partials.hero-multi-banner')
+  {{-- @include('content.front-pages.partials.hero-single-banner') --}}
 
   <!-- ===== STATS BAR ===== -->
   <section class="agri-stats-bar">
@@ -787,7 +743,130 @@
       }
     }, { passive: true });
 
+    // ============================================================
+    // ===== HERO SLIDER ENGINE =====
+    // Auto-detects: multi-banner (.hero-slide) or single bg slider (.hero-bg-slide)
+    // ============================================================
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const bgSlides = document.querySelectorAll('.hero-bg-slide');
+    // Use whichever set of slides exists (multi-banner takes priority)
+    const slides = heroSlides.length > 0 ? heroSlides : bgSlides;
+    const dots = document.querySelectorAll('.slider-dot');
+    const prevBtn = document.getElementById('heroPrev');
+    const nextBtn = document.getElementById('heroNext');
+    let currentSlide = 0;
+    let slideInterval = null;
+    const SLIDE_DURATION = 6000; // 6 seconds per slide
+    let isPaused = false;
+
+    if (slides.length > 1) {
+      function goToSlide(index) {
+        // Remove active from all slides and dots
+        slides.forEach(slide => {
+          slide.classList.remove('active');
+        });
+        dots.forEach(dot => {
+          dot.classList.remove('active');
+          const progress = dot.querySelector('.dot-progress');
+          if (progress) {
+            progress.style.animation = 'none';
+            progress.offsetHeight; // force reflow
+            progress.style.animation = '';
+          }
+        });
+
+        // Set new active
+        currentSlide = index;
+        if (slides[currentSlide]) {
+          slides[currentSlide].classList.add('active');
+        }
+        if (dots[currentSlide]) {
+          dots[currentSlide].classList.add('active');
+        }
+      }
+
+      function nextSlide() {
+        goToSlide((currentSlide + 1) % slides.length);
+      }
+
+      function prevSlide() {
+        goToSlide((currentSlide - 1 + slides.length) % slides.length);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        slideInterval = setInterval(() => {
+          if (!isPaused) nextSlide();
+        }, SLIDE_DURATION);
+      }
+
+      function stopAutoplay() {
+        if (slideInterval) {
+          clearInterval(slideInterval);
+          slideInterval = null;
+        }
+      }
+
+      // Arrow click handlers
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+          nextSlide();
+          startAutoplay();
+        });
+      }
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+          prevSlide();
+          startAutoplay();
+        });
+      }
+
+      // Dot click handlers
+      dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+          const slideIndex = parseInt(this.getAttribute('data-slide'));
+          if (slideIndex !== currentSlide) {
+            goToSlide(slideIndex);
+            startAutoplay();
+          }
+        });
+      });
+
+      // Pause on hover
+      const heroEl = document.querySelector('.agri-hero');
+      if (heroEl) {
+        heroEl.addEventListener('mouseenter', () => { isPaused = true; });
+        heroEl.addEventListener('mouseleave', () => { isPaused = false; });
+      }
+
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') { nextSlide(); startAutoplay(); }
+        else if (e.key === 'ArrowLeft') { prevSlide(); startAutoplay(); }
+      });
+
+      // Touch swipe support
+      let touchStartX = 0;
+      if (heroEl) {
+        heroEl.addEventListener('touchstart', function(e) {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        heroEl.addEventListener('touchend', function(e) {
+          const diff = touchStartX - e.changedTouches[0].screenX;
+          if (Math.abs(diff) > 50) {
+            diff > 0 ? nextSlide() : prevSlide();
+            startAutoplay();
+          }
+        }, { passive: true });
+      }
+
+      // Start autoplay
+      startAutoplay();
+    }
+
   });
 </script>
 @endsection
+
 
