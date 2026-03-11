@@ -27,7 +27,7 @@
 
           <!-- About University Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#about" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+            <a class="nav-link dropdown-toggle" href="#about" role="button" aria-expanded="false">About</a>
             <ul class="dropdown-menu agri-dropdown">
               <li><a class="dropdown-item" href="#about"><i class="fas fa-university me-2"></i>About University</a></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-bullseye me-2"></i>Vision & Mission</a></li>
@@ -40,7 +40,7 @@
 
           <!-- ★ Faculties Mega Menu ★ -->
           <li class="nav-item dropdown mega-dropdown" id="facultiesMegaMenu">
-            <a class="nav-link dropdown-toggle" href="#programs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#programs" role="button" aria-expanded="false">
               <i class="fas fa-graduation-cap me-1"></i>Faculties
             </a>
             <div class="dropdown-menu agri-mega-menu">
@@ -160,7 +160,7 @@
 
           <!-- Student Corner Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Student Corner</a>
+            <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">Student Corner</a>
             <ul class="dropdown-menu agri-dropdown">
               <li><a class="dropdown-item" href="#"><i class="fas fa-id-card me-2"></i>Student Portal</a></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>Syllabus</a></li>
@@ -178,7 +178,7 @@
 
           <!-- Admissions Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admissions</a>
+            <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">Admissions</a>
             <ul class="dropdown-menu agri-dropdown">
               <li><a class="dropdown-item" href="#"><i class="fas fa-user-plus me-2"></i>Apply Online</a></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-file-pdf me-2"></i>Admission Prospectus</a></li>
@@ -567,12 +567,17 @@
       observer.observe(el);
     });
 
-    // Smooth scroll for nav links
+    // Smooth scroll for nav links (skip dropdown toggles)
     document.querySelectorAll('.agri-navbar .nav-link[href^="#"]').forEach(link => {
       link.addEventListener('click', function(e) {
+        // Skip if this is a dropdown toggle
+        if (this.classList.contains('dropdown-toggle')) return;
+
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
+          // Close any open dropdowns first
+          closeAllDropdowns();
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -610,7 +615,6 @@
         if (entry.isIntersecting) {
           const el = entry.target;
           const text = el.textContent;
-          // Only animate if starts with a number
           const match = text.match(/^(\d[\d,]*)/);
           if (match) {
             const target = parseInt(match[1].replace(/,/g, ''));
@@ -639,11 +643,9 @@
     const navbar = document.querySelector('.agri-navbar');
     if (navbar) {
       const navbarHeight = navbar.offsetHeight;
-      // Create spacer to prevent content jump
       const spacer = document.createElement('div');
       spacer.style.height = navbarHeight + 'px';
       navbar.parentNode.insertBefore(spacer, navbar.nextSibling);
-      // Move navbar to body for true fixed positioning
       document.body.prepend(navbar);
       navbar.style.position = 'fixed';
       navbar.style.top = '0';
@@ -652,6 +654,139 @@
       navbar.style.width = '100%';
       navbar.style.zIndex = '1050';
     }
+
+    // ============================================================
+    // ===== HOVER DROPDOWN SYSTEM (Desktop) + Click (Mobile) =====
+    // ============================================================
+    const HOVER_DELAY = 150; // ms delay before closing
+    let closeTimer = null;
+    let currentOpenDropdown = null;
+
+    function openDropdown(navItem) {
+      // Clear any pending close
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+
+      // Close previously open dropdown if different
+      if (currentOpenDropdown && currentOpenDropdown !== navItem) {
+        closeDropdownImmediately(currentOpenDropdown);
+      }
+
+      const menu = navItem.querySelector('.dropdown-menu');
+      const toggle = navItem.querySelector('.dropdown-toggle');
+      if (menu && toggle) {
+        navItem.classList.add('show');
+        toggle.classList.add('show');
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.classList.add('show');
+        currentOpenDropdown = navItem;
+      }
+    }
+
+    function closeDropdown(navItem) {
+      // Delay closing so user can move mouse from toggle to menu
+      closeTimer = setTimeout(() => {
+        closeDropdownImmediately(navItem);
+      }, HOVER_DELAY);
+    }
+
+    function closeDropdownImmediately(navItem) {
+      const menu = navItem.querySelector('.dropdown-menu');
+      const toggle = navItem.querySelector('.dropdown-toggle');
+      if (menu && toggle) {
+        navItem.classList.remove('show');
+        toggle.classList.remove('show');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('show');
+      }
+      if (currentOpenDropdown === navItem) {
+        currentOpenDropdown = null;
+      }
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.agri-navbar .nav-item.dropdown').forEach(item => {
+        closeDropdownImmediately(item);
+      });
+      currentOpenDropdown = null;
+    }
+
+    function isDesktop() {
+      return window.innerWidth >= 992;
+    }
+
+    // Attach hover events to each dropdown nav-item
+    document.querySelectorAll('.agri-navbar .nav-item.dropdown').forEach(navItem => {
+      const toggle = navItem.querySelector('.dropdown-toggle');
+      const menu = navItem.querySelector('.dropdown-menu');
+
+      // ---- DESKTOP: mouseenter / mouseleave ----
+      navItem.addEventListener('mouseenter', function() {
+        if (isDesktop()) {
+          openDropdown(navItem);
+        }
+      });
+
+      navItem.addEventListener('mouseleave', function() {
+        if (isDesktop()) {
+          closeDropdown(navItem);
+        }
+      });
+
+      // Keep menu open while hovering over it
+      if (menu) {
+        menu.addEventListener('mouseenter', function() {
+          if (isDesktop() && closeTimer) {
+            clearTimeout(closeTimer);
+            closeTimer = null;
+          }
+        });
+
+        menu.addEventListener('mouseleave', function() {
+          if (isDesktop()) {
+            closeDropdown(navItem);
+          }
+        });
+      }
+
+      // ---- MOBILE: click toggle ----
+      if (toggle) {
+        toggle.addEventListener('click', function(e) {
+          if (!isDesktop()) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = navItem.classList.contains('show');
+            // Close all others
+            document.querySelectorAll('.agri-navbar .nav-item.dropdown').forEach(other => {
+              if (other !== navItem) closeDropdownImmediately(other);
+            });
+            // Toggle current
+            if (isOpen) {
+              closeDropdownImmediately(navItem);
+            } else {
+              openDropdown(navItem);
+            }
+          }
+        });
+      }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.agri-navbar .nav-item.dropdown')) {
+        closeAllDropdowns();
+      }
+    });
+
+    // Close dropdowns on scroll (optional, smoother UX)
+    window.addEventListener('scroll', function() {
+      if (isDesktop() && currentOpenDropdown) {
+        closeAllDropdowns();
+      }
+    }, { passive: true });
+
   });
 </script>
 @endsection
