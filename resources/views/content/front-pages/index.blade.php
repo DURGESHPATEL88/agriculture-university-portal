@@ -24,10 +24,174 @@
       <div class="collapse navbar-collapse" id="agriNavbar">
         <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+
+          <!-- About University Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#about" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+            <ul class="dropdown-menu agri-dropdown">
+              <li><a class="dropdown-item" href="#about"><i class="fas fa-university me-2"></i>About University</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-bullseye me-2"></i>Vision & Mission</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-users me-2"></i>Vice-Chancellor</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-landmark me-2"></i>Administration</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-certificate me-2"></i>Accreditations (ICAR/NAAC)</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-map-marked-alt me-2"></i>Campus Tour</a></li>
+            </ul>
+          </li>
+
+          <!-- ★ Faculties Mega Menu ★ -->
+          <li class="nav-item dropdown mega-dropdown" id="facultiesMegaMenu">
+            <a class="nav-link dropdown-toggle" href="#programs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-graduation-cap me-1"></i>Faculties
+            </a>
+            <div class="dropdown-menu agri-mega-menu">
+              <div class="mega-menu-inner">
+                <div class="mega-menu-header">
+                  <h5><i class="fas fa-graduation-cap me-2"></i>Our Faculties & Departments</h5>
+                  <p>Explore 7 faculties with 30+ departments across agricultural and allied sciences</p>
+                </div>
+                <div class="mega-menu-grid">
+
+                  <!-- Faculty 1: Agriculture Science -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-seedling"></i> Faculty of Agriculture</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Agronomy</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Soil Science</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Plant Pathology</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Entomology</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Genetics & Plant Breeding</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Agricultural Economics</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Extension Education</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Faculty 2: Veterinary & Animal Science -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-paw"></i> Faculty of Veterinary Science</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Animal Husbandry</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Veterinary Medicine</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Dairy Science</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Livestock Production</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Poultry Science</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Faculty 3: Agricultural Engineering -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-cogs"></i> Faculty of Agri. Engineering</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Farm Machinery</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Irrigation & Drainage</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Food Process Engineering</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Renewable Energy</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Soil & Water Conservation</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Faculty 4: Basic Sciences -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-flask"></i> Faculty of Basic Sciences</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Chemistry & Biochemistry</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Mathematics & Statistics</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Physics</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Biotechnology</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Microbiology</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Faculty 5: Horticulture -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-tree"></i> Faculty of Horticulture</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Fruit Science</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Vegetable Science</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Floriculture</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Landscape Architecture</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Spices & Plantation Crops</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Faculty 6: Fisheries Science -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-fish"></i> Faculty of Fisheries Science</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Aquaculture</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Fisheries Resources</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Fish Processing</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Fisheries Biology</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Faculty 7: Home Science -->
+                  <div class="mega-menu-col">
+                    <div class="faculty-group">
+                      <h6 class="faculty-title"><i class="fas fa-home"></i> Faculty of Home Science</h6>
+                      <ul class="dept-list">
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Food & Nutrition</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Human Development</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Textile & Apparel</a></li>
+                        <li><a href="#"><i class="fas fa-circle"></i> Dept. of Family Resource Mgmt.</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="mega-menu-footer">
+                  <a href="#programs" class="btn-view-all"><i class="fas fa-th-list me-2"></i>View All Programs & Courses</a>
+                  <a href="#" class="btn-view-all btn-view-all-secondary"><i class="fas fa-download me-2"></i>Download Prospectus</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Student Corner Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Student Corner</a>
+            <ul class="dropdown-menu agri-dropdown">
+              <li><a class="dropdown-item" href="#"><i class="fas fa-id-card me-2"></i>Student Portal</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>Syllabus</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-calendar-alt me-2"></i>Academic Calendar</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-clipboard-list me-2"></i>Exam Notifications</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-poll me-2"></i>Results</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-file-alt me-2"></i>Old Question Papers</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-money-bill-wave me-2"></i>Fee Structure</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-medal me-2"></i>Scholarships</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-bed me-2"></i>Hostel</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-book-reader me-2"></i>Library</a></li>
+            </ul>
+          </li>
+
+          <!-- Admissions Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admissions</a>
+            <ul class="dropdown-menu agri-dropdown">
+              <li><a class="dropdown-item" href="#"><i class="fas fa-user-plus me-2"></i>Apply Online</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-file-pdf me-2"></i>Admission Prospectus</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-list-ol me-2"></i>Eligibility Criteria</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-rupee-sign me-2"></i>Fee Structure</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-phone-alt me-2"></i>Admission Helpline</a></li>
+            </ul>
+          </li>
+
           <li class="nav-item"><a class="nav-link" href="#news">News</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
           @if (Route::has('login'))
             @auth
               <li class="nav-item ms-lg-2">
