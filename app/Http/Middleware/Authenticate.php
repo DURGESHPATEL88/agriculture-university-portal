@@ -34,7 +34,7 @@ class Authenticate
 
         // If no guard authenticated, handle unauthenticated scenario
         if (!$authenticated) {
-            return $this->unauthenticated($request, $guards);
+            $this->unauthenticated($request, $guards);
         }
 
         // Proceed with the request if authenticated
@@ -43,20 +43,22 @@ class Authenticate
 
     /**
      * Handle unauthenticated user.
+     *
+     * @throws \Illuminate\Auth\AuthenticationException
      */
-    protected function unauthenticated($request, array $guards)
+    protected function unauthenticated(Request $request, array $guards): void
     {
         throw new AuthenticationException(
             'Unauthenticated.',
             $guards,
-            $this->requestTo($request, $guards)
+            $this->redirectTo($request, $guards)
         );
     }
 
     /**
      * Determine the login route based on the guards.
      */
-    protected function requestTo(Request $request, array $guards)
+    protected function redirectTo(Request $request, array $guards): ?string
     {
         if (in_array('super_admin', $guards)) {
             return route('super-admin.login');

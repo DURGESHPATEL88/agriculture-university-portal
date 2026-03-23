@@ -35,6 +35,10 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
+
+
+        require base_path('routes/common.php'); // ✅ include
+
     });
    
 });
