@@ -20,10 +20,10 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
         Route::post('register', [RegisteredUserController::class, 'store'])
             ->name('password.store');
     });
-   
-});
- Route::middleware('auth:super_admin')->group(function () {
-        Route::get('/dashboard', function () {
+
+
+    Route::middleware('auth:super_admin')->group(function () {
+        Route::get('/dashboard', function () { 
             return view('super-admin.dashboard');
         })->name('dashboard');
 
@@ -36,3 +36,6 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
     });
+   
+});
+ 
