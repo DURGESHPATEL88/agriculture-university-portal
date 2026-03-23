@@ -49,14 +49,14 @@ class Authenticate
         throw new AuthenticationException(
             'Unauthenticated.',
             $guards,
-            $this->requestTo($guards)
+            $this->requestTo($request, $guards)
         );
     }
 
     /**
      * Determine the login route based on the guards.
      */
-    protected function requestTo(array $guards)
+    protected function requestTo(Request $request, array $guards)
     {
         if (in_array('super_admin', $guards)) {
             return route('super-admin.login');
