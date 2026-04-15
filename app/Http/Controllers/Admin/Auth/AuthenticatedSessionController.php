@@ -15,7 +15,7 @@ class AuthenticatedSessionController extends Controller
      * Display the login view.
      */
     public function create(): View
-    {  
+    {
         return view('admin.auth.login');
     }
 
@@ -24,7 +24,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(AdminLoginRequest $request): RedirectResponse
     {
-        
+
         $request->authenticate();
 
         $request->session()->regenerate();

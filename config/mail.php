@@ -122,4 +122,13 @@ return [
         ],
     ],
 
+    'stream' => [
+        'ssl' => [
+            'cafile' => 'E:/wamp64/bin/php/php8.3.14/extras/ssl/cacert.pem',
+            'verify_peer' => true,
+            'verify_peer_name' => true,
+        ],
+    ],
+
+
 ];

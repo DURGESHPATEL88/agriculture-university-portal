@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\SuperAdmin\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\SuperAdmin\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\SuperAdmin\Auth\VerifyEmailController;
 use App\Http\Controllers\SuperAdmin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\SuperAdmin\Auth\PasswordController;
 use App\Http\Controllers\SuperAdmin\Auth\RegisteredUserController;
@@ -14,16 +17,16 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
             ->name('login');
 
         Route::post('login', [AuthenticatedSessionController::class, 'store'])
-            ->name('password.store');
+            ->name('login.store');
         Route::get('register', [RegisteredUserController::class, 'create'])
             ->name('register');
         Route::post('register', [RegisteredUserController::class, 'store'])
-            ->name('password.store');
+            ->name('register.store');
     });
 
 
     Route::middleware('auth:super_admin')->group(function () {
-        Route::get('/dashboard', function () { 
+        Route::get('/dashboard', function () {
             return view('super-admin.dashboard');
         })->name('dashboard');
 
@@ -37,9 +40,19 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
             ->name('logout');
 
 
+        Route::get('verify-email', EmailVerificationPromptController::class)
+            ->name('verification.notice');
+
+        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
+
+        Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send'); 
+
+
         require base_path('routes/common.php'); // ✅ include
 
     });
-   
 });
- 

@@ -38,8 +38,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::middleware('auth:admin')->group(function () {
-        
-        Route::get('/dashboard', function () { 
+
+        Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
@@ -55,5 +55,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
         require base_path('routes/common.php'); // ✅ include
 
     });
-
 });
