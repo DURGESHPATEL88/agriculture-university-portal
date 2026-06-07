@@ -401,29 +401,7 @@ $navbarDetached = ($navbarDetached ?? '');
               <li>
                 <div class="dropdown-divider my-0"></div>
               </li>
-              <li>
-                <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : url('pages/profile-user') }}">
-                  <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                  <span class="align-middle">My Profile</span>
-                </a>
-              </li>
-              @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
-              <li>
-                <a class="dropdown-item" href="{{ route('api-tokens.index') }}">
-                  <i class='mdi mdi-account-key-outline me-1 mdi-20px'></i>
-                  <span class="align-middle">API Tokens</span>
-                </a>
-              </li>
-              @endif
-              <li>
-                <a class="dropdown-item" href="{{url('pages/account-settings-billing')}}">
-                  <span class="d-flex align-items-center align-middle">
-                    <i class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"></i>
-                    <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                  </span>
-                </a>
-              </li>
+               
               @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
               <li>
                 <div class="dropdown-divider"></div>
@@ -472,12 +450,12 @@ $navbarDetached = ($navbarDetached ?? '');
               </li>
               @if (Auth::check())
               <li>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="dropdown-item" href="{{ Auth::guard('super_admin')->check() ? route('super-admin.logout') : (Auth::guard('admin')->check() ? route('admin.logout') : route('logout')) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class='mdi mdi-logout me-1 mdi-20px'></i>
                   <span class="align-middle">Logout</span>
                 </a>
               </li>
-              <form method="POST" id="logout-form" action="{{ route('logout') }}">
+              <form method="POST" id="logout-form" action="{{ Auth::guard('super_admin')->check() ? route('super-admin.logout') : (Auth::guard('admin')->check() ? route('admin.logout') : route('logout')) }}">
                 @csrf
               </form>
               @else

@@ -27,7 +27,7 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
 
     Route::middleware('auth:super_admin')->group(function () {
         Route::get('/dashboard', function () {
-            return view('super-admin.dashboard');
+                return view('content.dashboard.dashboards-analytics'); 
         })->name('dashboard');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
