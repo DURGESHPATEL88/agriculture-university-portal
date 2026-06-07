@@ -15,5 +15,3 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
-require __DIR__ . '/super-admin.php';
