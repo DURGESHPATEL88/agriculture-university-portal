@@ -1,10 +1,10 @@
 <?php
 // Variables
 return [
-  "creatorName" => "ThemeSelection",
-  "creatorUrl" => "https://themeselection.com",
-  "templateName" => "Materio",
-  "templateSuffix" => "Bootstrap 5 HTML + Laravel Admin Template",
+  "creatorName" => "University Portal",
+  "creatorUrl" => "",
+  "templateName" => "University Portal",
+  "templateSuffix" => "University Portal",
   "templateVersion" => "1.0.0",
   "templateFree" => false,
   "templateDescription" => "Most Powerful & Comprehensive Bootstrap 5 + Laravel HTML Admin Dashboard Template built for developers!",

@@ -1,10 +1,10 @@
 @extends('layouts/layoutMaster')
 
 @php
-  $configData = Helper::appClasses();
+$configData = Helper::appClasses();
 @endphp
 
-@section('title', 'Dashboard - Analytics')
+@section('title', 'Dashboard')
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/apex-charts/apex-charts.css')}}" />

@@ -1,10 +1,10 @@
 {
   "menu": [
     {
-      "route": "dashboard",
+      "route": "super-admin.dashboard",
       "name": "Dashboard",
       "icon": "menu-icon tf-icons mdi mdi-home-outline",
-      "slug": "dashboard"
+      "slug": "super-admin.dashboard"
     },
     {
       "menuHeader": "Management"
@@ -62,6 +62,6 @@
           "slug": "app-academy-dashboard"
         }
       ]
-    }  
+    }
   ]
 }
